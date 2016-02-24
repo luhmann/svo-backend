@@ -4,13 +4,11 @@ import { Router, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 
 import configureStore from './store/store.js'
-import createRoutes from './routes/root.js'
-
-const store = configureStore()
+import Routes from './routes/routes.jsx'
 
 render(
-  <Provider store={store}>
-    <Router history={browserHistory} routes={createRoutes(store)} />
+  <Provider store={configureStore()}>
+    <Router history={browserHistory} routes={Routes} />
   </Provider>,
   document.getElementById('app')
 )

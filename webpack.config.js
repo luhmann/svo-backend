@@ -17,12 +17,16 @@ const PATHS = {
 const common = {
   entry: PATHS.app,
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/, // js and jsx
-        loaders: ['babel?cacheDirectory'],
-        include: PATHS.app
-      },
+    loaders: [{
+      test: /\.jsx?$/, // js and jsx
+      loaders: ['babel?cacheDirectory'],
+      include: PATHS.app
+    },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.woff2?$/, loader: 'url?limit=100000' },
+      { test: /\.eot$/, loader: 'url?limit=100000' },
+      { test: /\.ttf$/, loader: 'url?limit=100000' },
+      { test: /\.svg$/, loader: 'url?limit=100000' },
       {
         test: /\.styl$/,
         loader: ExtractTextPlugin.extract(
@@ -33,7 +37,7 @@ const common = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.styl']
+    extensions: ['', '.js', '.jsx', '.styl', '.css']
   },
   output: {
     path: PATHS.build,
@@ -68,8 +72,13 @@ if (TARGET === 'dev' || !TARGET) {
     },
     devtool: '#eval-source-map',
     plugins: [
-      new NpmInstallPlugin({ save: true, saveDev: true }),
-      new ExtractTextPlugin('app.css', { allChunks: true }),
+      new NpmInstallPlugin({
+        save: true,
+        saveDev: true
+      }),
+      new ExtractTextPlugin('app.css', {
+        allChunks: true
+      }),
       new webpack.HotModuleReplacementPlugin()
     ]
   })

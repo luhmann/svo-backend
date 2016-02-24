@@ -1,9 +1,12 @@
-import { combineReducers } from 'redux-immutable'
+import { combineReducers } from 'redux-immutablejs'
+import Immutable from 'immutable'
+import { reducer as formReducer } from 'redux-form'
 
-import route from './RouteReducer.js'
+import routeReducer from './RouteReducer.js'
 
 const rootReducer = combineReducers({
-  route
+  form: (state = Immutable.fromJS({}), action) => Immutable.fromJS(formReducer(state.toJS(), action)),
+  route: routeReducer
 })
 
 export default rootReducer
